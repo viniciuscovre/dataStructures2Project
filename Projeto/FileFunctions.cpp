@@ -26,7 +26,7 @@ typedef struct
 } CACHORRO;
 
 /* Header de AP2 com o código do último cachorro cadastrado */
-short int cod_cachorro; /* Auto-Incremento */
+int cod_cachorro; /* Auto-Incremento */
 
 short int root; /* Declara o cabeçalho do arquivo AP1: RRN da Página Raíz */
 int btfd; /* Descrição do Arquivo de Árvore B */ //??
@@ -97,11 +97,12 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx)
             getch();
             return;
         }
-        printf("\n\nO ARQUIVO NAO EXISTE!\n\n");getch();
+        printf("\n\nO ARQUIVO NAO EXISTE!\n\n");
         rewind(*AP2);
-        short int aux = 0;
-        fwrite(&aux, sizeof(short int), 1, *AP2);
+        int aux = 0;
+        fwrite(&aux, sizeof(int), 1, *AP2);
         cod_cachorro = aux;
+        printf("\n\n%d\n\n", cod_cachorro);getch();
     }
     else /* Se o arquivo já existir */
     {
@@ -111,9 +112,10 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx)
             getch();
             return;
         }
-        printf("\n\nO ARQUIVO EXISTE!\n\n");getch();
+        printf("\n\nO ARQUIVO EXISTE!\n\n");
         rewind(*AP2);
-        fread(&cod_cachorro, sizeof(short int), 1, *AP2);
+        fread(&cod_cachorro, sizeof(int), 1, *AP2);
+        printf("\n\n%d\n\n", cod_cachorro);getch();
     }
 }
 
@@ -123,9 +125,9 @@ void CadastraCachorro(FILE **AP2)
 	
 	system("CLS");
 	
-	cod_cachorro++;
 	rewind(*AP2);
-	fwrite(&cod_cachorro, sizeof(short int), 1, *AP2); /* Atualiza header de AP2 */
+	cod_cachorro++;
+	fwrite(&cod_cachorro, sizeof(int), 1, *AP2); /* Atualiza header de AP2 */
 	printf(" Codigo: %d\n", cod_cachorro);
 	
 	fflush(stdin);
