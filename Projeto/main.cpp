@@ -8,40 +8,27 @@ UNESP - Rio Claro.
 #include <stdlib.h>
 #include <stdio.h>
 #include <conio.h>
-#include "bt.h"
 #include "functions.h"
-
-/* Define um tipo para o cadastro de vacinas (AP1) */
-typedef struct
-{
-    int cod_controle;
-    int cod_cachorro;
-    char vacina[30];
-    char data[5];
-    char responsavel[30];
-} VACINA;
-
-/* Define um tipo para o cadastro de cachorros (AP2) */
-typedef struct
-{
-    int cod_cachorro; /* Auto-Incremento */
-    char raca[30];
-    char nome[30];
-} CACHORRO;
 
 int main()
 {
     FILE *AP1, *AP2, *BTidx;
     AbreArquivos(&AP1, &AP2, &BTidx);
     
+    int promoted; /* Booleano: diz se houve promoção da página */
+    short int root, /* RRN da página Raíz */
+              promo_rrn; /* RRN da página promovida */
+    int promo_chave, /* Chave promovida */
+        chave; /* Próxima chave a ser inserida na árvore */
+         
     int opcao = Menu();
     while (1)
 	{
 	    switch(opcao)
 	    {
-	        /*case 1: CadastraCachorro(&AP2); 
+	        case 1: CadastraCachorro(&AP2); 
                     break;
-	        case 2: CadastraVacina(&AP1, &AP2, &IndPrim, &IndSec1, &IndSec2); 
+	        /*case 2: CadastraVacina(&AP1, &AP2, &IndPrim, &IndSec1, &IndSec2); 
                     break;
 			case 3: AlteraCachorro(&AP2);
                     break;

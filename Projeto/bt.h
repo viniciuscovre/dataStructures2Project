@@ -1,5 +1,5 @@
 /*******************************************************************************
-DESCRIÇÃO DA BIBLIOTECA: Essa biblioteca cria a estrutura de dados de Árvores B.
+                Cria a estrutura de dados de Árvores B.
 *******************************************************************************/
 
 /* Definições de constantes para a Árvore B */
@@ -19,3 +19,7 @@ typedef struct
 } BTIDX;
 
 #define PAGESIZE sizeof(BTIDX)
+
+/*******************************************************************************
+                                    Fim
+*******************************************************************************/

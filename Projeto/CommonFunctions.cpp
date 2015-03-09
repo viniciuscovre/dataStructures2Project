@@ -12,8 +12,8 @@ int Menu()
 	int opcao;
 	system("CLS");
 	printf("%c%c%c CL%cNICA VETERIN%cRIA %c%c%c\n", 178, 177, 176, 214, 181, 176, 177, 178);
-    /*printf("\n 1 %c Cadastra Cachorro", 175);
-    printf("\n 2 %c Cadastra Vacina", 175);
+    printf("\n 1 %c Cadastra Cachorro", 175);
+    /*printf("\n 2 %c Cadastra Vacina", 175);
 	printf("\n 3 %c Altera Cachorro", 175);
 	printf("\n 4 %c Alterar dados de Vacina", 175);
 	printf("\n 5 %c Remove Vacina", 175);

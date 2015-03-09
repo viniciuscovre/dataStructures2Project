@@ -1,13 +1,3 @@
-/* Declaração das Funções relacionadas à Árvore B */
-
-/*******************************************************************************
-DESCRIÇÃO: Verifica se os arquivos já foram criados. Se não, cria-os.
-           Válido para os arquivos de Árvore B.
-PARÂMETROS: AP1 - Arquivo Principal 1
-            AP2 - Arquivo Principal 2
-*******************************************************************************/
-void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx);
-
 /*******************************************************************************
 DESCRIÇÃO: Inicializa o Arquivo Principal 1.
            Inicializa os arquivos de índices de Árvore B e de Hash.
@@ -18,7 +8,31 @@ PARÂMETROS: AP1 - Arquivo Principal 1
 void InicializaArquivos(FILE **AP1, FILE **BTidx);
 
 
-/* Declaração das Funções que não manipulam arquivos */
+/*******************************************************************************
+DESCRIÇÃO: Verifica se os arquivos já foram criados. Se não, cria-os.
+PARÂMETROS: AP1 - Arquivo Principal 1
+            AP2 - Arquivo Principal 2
+            BTidx - Arquivo de índice de Árvore B
+*******************************************************************************/
+void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx);
+
+
+/*******************************************************************************
+DESCRIÇÃO: Cadastra informações de um cachorro no Arquivo Principal 2
+PARÂMETROS: AP2 - Arquivo Principal 2
+*******************************************************************************/
+void CadastraCachorro(FILE **AP2);
+
+
+/*******************************************************************************
+DESCRIÇÃO: Verifica se o código já existe no arquivo.
+PARÂMETROS: codigo - Código a ser verificado
+            AP2 - Arquivo Principal 2
+RETORNOS: 0 - Não existe um cachorro com o código passado por parâmetro
+          1 - Existe um cachorro com o código passado por parâmetro
+*******************************************************************************/
+int ExisteCachorro(int codigo, FILE **AP2);
+
 
 /*******************************************************************************
 DESCRIÇÃO: Exibe o menu de opções das possíveis operações do programa.
