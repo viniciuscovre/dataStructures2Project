@@ -1,8 +1,7 @@
 /*******************************************************************************
 DESCRIÇÃO DO ARQUIVO: Esse arquivo.cpp reúne as funções que utlilizam dos
 arquivos do projeto. Em outras palavras, é o conjunto de funções relacionadas
-a operações de main nos arquivos binários. 
---> Relacionado à Árvores B (funções indicadas por 'BT_').
+a operações de main nos arquivos binários.
 *******************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
