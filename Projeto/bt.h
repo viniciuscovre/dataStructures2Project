@@ -5,7 +5,7 @@ DESCRIÇÃO DA BIBLIOTECA: Essa biblioteca cria a estrutura de dados de Árvores B.
 /* Definições de constantes para a Árvore B */
 #define MAXKEYS 4 /* Árvore B de ordem M (onde M = MAXKEYS + 1) */
 #define MINKEYS ceil((MAXKEYS+1)/2) /* Mínimo de nós em uma página (exceto para a raíz) */
-#define NIL (-1)
+//#define NIL (-1)
 #define NOKEY '@'
 #define NO 0
 #define YES 1

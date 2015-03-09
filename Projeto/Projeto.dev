@@ -1,7 +1,7 @@
 [Project]
 FileName=Projeto.dev
 Name=Projeto
-UnitCount=5
+UnitCount=4
 Type=1
 Ver=1
 ObjFiles=
@@ -68,7 +68,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=FileFunctions.cpp
+FileName=BT_FileFunctions.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -78,17 +78,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit4]
-FileName=CommonFunctions.cpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit5]
-FileName=functions.h
+FileName=CommonFunctions.h
 CompileCpp=1
 Folder=
 Compile=1

@@ -1,12 +1,16 @@
 /*******************************************************************************
-DESCRIÇÃO DO ARQUIVO: Esse arquivo.cpp reúne as funções que não utlilizam dos
-arquivos do projeto. Em outras palavras, é o conjunto de funções relacionadas
+DESCRIÇÃO DA BIBLIOTECA: Essa biblioteca reúne as funções que não utlilizam dos
+arquivos do projeto. Em outras palavras, é a biblioteca de funções relacionadas
 a operações de main que não necessitam dos arquivos binários.
 *******************************************************************************/
-#include <stdlib.h>
-#include <stdio.h>
-#include <conio.h>
 
+/* Declaração das Funções */
+int Menu();
+
+/*******************************************************************************
+DESCRIÇÃO: Exibe o menu de opções das possíveis operações do programa.
+RETORNO: Retorna a opção escolhida pelo usuário.
+*******************************************************************************/
 int Menu()
 {
 	int opcao;
