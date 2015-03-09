@@ -8,8 +8,8 @@ UNESP - Rio Claro.
 #include <stdlib.h>
 #include <stdio.h>
 #include <conio.h>
-
-short int header; /* Declara o cabeçalho do arquivo AP1: RRN da Página Raíz */
+#include "bt.h"
+#include "functions.h"
 
 /* Define um tipo para o cadastro de vacinas (AP1) */
 typedef struct
@@ -29,17 +29,10 @@ typedef struct
     char nome[30];
 } CACHORRO;
 
-/* Chamada das Bibliotecas criadas associadas ao Projeto */
-#include "bt.h"
-#include "BT_FileFunctions.h"
-#include "CommonFunctions.h"
-
-BTIDX btidx; /* Declara índice primário de Árvore B */
-
 int main()
 {
-    FILE *AP1, *AP2;
-    BT_AbreArquivos(&AP1, &AP2);
+    FILE *AP1, *AP2, *BTidx;
+    AbreArquivos(&AP1, &AP2, &BTidx);
     
     int opcao = Menu();
     while (1)
@@ -66,8 +59,9 @@ int main()
 					/* Fecha arquivos principais */ 
         	        fclose(AP1); 
 					fclose(AP2);
+					fclose(BTidx);
                     getch(); 
-                    return 0; 
+                    return 0;
 	        default: printf("\nOpcao invalida!"); 
                      getch();
                      break;
