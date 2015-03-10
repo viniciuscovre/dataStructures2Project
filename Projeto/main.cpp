@@ -28,9 +28,26 @@ int main()
 	    {
 	        case 1: CadastraCachorro(&AP2); 
                     break;
-	        /*case 2: CadastraVacina(&AP1, &AP2, &IndPrim, &IndSec1, &IndSec2); 
+	        case 2: CadastraVacina(&AP1, &AP2, &BTidx);
+	                /* Inicializa Árvore B */
+	                /*if (btopen())
+                    {
+                        root = getroot();
+                    }
+                    else
+                    {
+                        root = create_tree();
+                    }
+    
+                    while ((key = getchar()) != 'q')
+                    {
+                        promoted = insert(root, key, &promo_rrn, &promo_key);
+                        if (promoted)
+                            root = create_root(promo_key, root, promo_rrn);
+                    }
+                    btclose();*/
                     break;
-			case 3: AlteraCachorro(&AP2);
+			/*case 3: AlteraCachorro(&AP2);
                     break;
 			case 4: AlteraDados(&AP1, &IndPrim, &IndSec1, &IndSec2);
                     break;
@@ -42,12 +59,10 @@ int main()
                     break;
             case 8: Compacta(&AP1, &IndSec2);
                     break; */
-	        case 0: printf("\nSaindo do Programa...");
-					/* Fecha arquivos principais */ 
-        	        fclose(AP1); 
+	        case 0: fclose(AP1); 
 					fclose(AP2);
 					fclose(BTidx);
-                    getch(); 
+					DeletarArquivos();
                     return 0;
 	        default: printf("\nOpcao invalida!"); 
                      getch();

@@ -26,7 +26,7 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx);
 
 
 /*******************************************************************************
-DESCRIÇÃO: Cadastra informações de um cachorro no Arquivo Principal 2
+DESCRIÇÃO: Cadastra informações de um cachorro no Arquivo Principal 2.
 PARÂMETROS: AP2 - Arquivo Principal 2
 *******************************************************************************/
 void CadastraCachorro(FILE **AP2);
@@ -43,7 +43,31 @@ int ExisteCachorro(int codigo, FILE **AP2);
 
 
 /*******************************************************************************
+DESCRIÇÃO: Pergunta o código do cachorro para posteriormente fazer uma operação.
+PARÂMETROS: AP2 - Arquivo Principal 2
+RETORNOS: Código do cachorro
+*******************************************************************************/
+int PerguntaCodigo(FILE **AP2);
+
+
+/*******************************************************************************
+DESCRIÇÃO: Realiza o cadastro de vacinas.
+PARÂMETROS: AP1 - Arquivo principal 1
+            AP2 - Arquivo principal 2
+            BTidx - Arquivo de índice de Árvore B
+*******************************************************************************/
+void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx);
+
+
+/*******************************************************************************
 DESCRIÇÃO: Exibe o menu de opções das possíveis operações do programa.
 RETORNO: Retorna a opção escolhida pelo usuário.
 *******************************************************************************/
 int Menu();
+
+
+/*******************************************************************************
+DESCRIÇÃO: Pergunta se o usuário quer deletar os arquivos do projeto. Se a
+resposta for 's', os arquivos são deletados da memória; caso contrário, não.
+*******************************************************************************/
+void DeletarArquivos();

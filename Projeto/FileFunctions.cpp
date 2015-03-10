@@ -159,3 +159,87 @@ int ExisteCachorro(int codigo, FILE **AP2)
 	}
     return 0;
 }
+
+int PerguntaCodigo(FILE **AP2)
+{
+    int cod, aux = 0;
+    system("CLS");
+    printf("\n Digite o codigo do cachorro <-1 para cadastrar um cachorro>: ");
+    scanf("%d", &cod);
+    if(cod == -1)
+    {   
+        CadastraCachorro(AP2);
+        aux = 1;
+    }
+    while (!ExisteCachorro(cod, AP2))
+    {
+        if (!aux)
+            printf("\n Cachorro inexistente. Digite novamente!");
+        else
+        {
+            printf("\n Nova busca..." );
+            aux = 0;
+        }
+        getch(); 
+        system("CLS");  
+        printf("\n Digite o codigo do cachorro <-1 para cadastrar um cachorro>: ");
+        scanf("%d", &cod);
+        if (cod == -1)
+        {
+            CadastraCachorro(AP2);
+            aux = 1;
+        }
+    }
+    return cod;
+}
+
+void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx)
+{
+    VACINA reg;
+    
+    system("CLS");
+    printf("\n Codigo de controle: ");
+    scanf("%d", &reg.cod_controle);
+    fflush(stdin);
+    
+    reg.cod_cachorro = PerguntaCodigo(AP2);
+    system("CLS");
+    printf("\n Codigo de controle: %d", reg.cod_controle);
+    printf("\n Codigo do cachorro: %d", reg.cod_cachorro);
+    fflush(stdin);
+    printf("\n Nome da vacina: ");
+    gets(reg.vacina);
+    printf(" Data de vacinacao <MM/AA>: ");
+    gets(reg.data);
+    printf(" Responsavel pela aplicacao: ");
+    gets(reg.responsavel);
+    
+    fseek(*AP1, sizeof(int), SEEK_SET); /* Pula o header de AP1 */
+    fwrite(&reg, sizeof(VACINA), 1, *AP1);
+}
+
+/*void InicializaBT()
+{
+    int promoted; // boolean: tells if a promotion from below
+    short root, // rrn of root page
+          promo_rrn; // rrn promoted from below
+    char promo_key, // key promoted from below
+         key; // next key to insert in tree
+         
+    if (btopen())
+    {
+        root = getroot();
+    }
+    else
+    {
+        root = create_tree();
+    }
+    
+    while ((key = getchar()) != 'q')
+    {
+        promoted = insert(root, key, &promo_rrn, &promo_key);
+        if (promoted)
+        root = create_root(promo_key, root, promo_rrn);
+    }
+    btclose();
+}*/
