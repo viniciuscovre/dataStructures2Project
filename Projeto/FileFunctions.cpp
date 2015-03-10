@@ -21,12 +21,13 @@ typedef struct
 /* Define um tipo para o cadastro de cachorros (AP2) */
 typedef struct
 {
+    int cod_cachorro;
     char raca[30];
     char nome[30];
 } CACHORRO;
 
 /* Header de AP2 com o código do último cachorro cadastrado */
-int cod_cachorro; /* Auto-Incremento */
+int cont; /* Auto-Incremento */
 
 short int root; /* Declara o cabeçalho do arquivo AP1: RRN da Página Raíz */
 int btfd; /* Descrição do Arquivo de Árvore B */ //??
@@ -43,6 +44,16 @@ void InicializaArquivos(FILE **AP1, FILE **BTidx)
     rewind(*BTidx);
     btidx.keycount = 0; /* Indica que a Página tem zero registros */
     fwrite(&btidx.keycount, PAGESIZE, 1, *BTidx);
+}
+
+int NumCachorros(FILE **AP2)
+{
+    int aux = 0;
+    CACHORRO reg;
+    rewind(*AP2);
+    while(fread(&reg, sizeof(CACHORRO), 1, *AP2))
+        aux++;
+    return aux;
 }
 
 void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx)
@@ -98,11 +109,8 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx)
             return;
         }
         printf("\n\nO ARQUIVO NAO EXISTE!\n\n");
-        rewind(*AP2);
-        int aux = 0;
-        fwrite(&aux, sizeof(int), 1, *AP2);
-        cod_cachorro = aux;
-        printf("\n\n%d\n\n", cod_cachorro);getch();
+        cont = 0;
+        printf("\n\n%d\n\n", cont); getch();
     }
     else /* Se o arquivo já existir */
     {
@@ -113,23 +121,19 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx)
             return;
         }
         printf("\n\nO ARQUIVO EXISTE!\n\n");
-        rewind(*AP2);
-        fread(&cod_cachorro, sizeof(int), 1, *AP2);
-        printf("\n\n%d\n\n", cod_cachorro);getch();
+        cont = NumCachorros(AP2);
+        printf("\n\n%d\n\n", cont); getch();
     }
 }
 
 void CadastraCachorro(FILE **AP2)
 {
 	CACHORRO reg;
-	
 	system("CLS");
-	
-	rewind(*AP2);
-	cod_cachorro++;
-	fwrite(&cod_cachorro, sizeof(int), 1, *AP2); /* Atualiza header de AP2 */
-	printf(" Codigo: %d\n", cod_cachorro);
-	
+
+	cont++;
+	reg.cod_cachorro = cont;
+	printf(" Codigo: %d\n", reg.cod_cachorro);
 	fflush(stdin);
 	printf(" Raca: ");
 	gets(reg.raca);
@@ -142,8 +146,16 @@ void CadastraCachorro(FILE **AP2)
 
 int ExisteCachorro(int codigo, FILE **AP2)
 {
-	if(codigo <= cod_cachorro)
-	   return 1;
-	else
-	   return 0;	
+	CACHORRO reg;
+	
+	fseek(*AP2, 0, SEEK_SET);
+	while (fread(&reg, sizeof(CACHORRO), 1, *AP2))
+	{
+		if (reg.cod_cachorro == codigo)
+		{
+			return 1;
+			break;
+		}	
+	}
+    return 0;
 }

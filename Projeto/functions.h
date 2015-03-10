@@ -9,6 +9,14 @@ void InicializaArquivos(FILE **AP1, FILE **BTidx);
 
 
 /*******************************************************************************
+DESCRIÇÃO: Informa o número de cachorros cadastrados.
+PARÂMETROS: AP2 - Arquivo Principal 2
+RETORNOS: O número de cachorros cadastrados em AP2
+*******************************************************************************/
+int NumCachorros(FILE **AP2);
+
+
+/*******************************************************************************
 DESCRIÇÃO: Verifica se os arquivos já foram criados. Se não, cria-os.
 PARÂMETROS: AP1 - Arquivo Principal 1
             AP2 - Arquivo Principal 2
