@@ -39,6 +39,7 @@ void DeletarArquivos()
         remove("AP1.bin");
         remove("AP2.bin");
         remove("BTidx.bin");
+        remove("HASHidx.bin");
         printf("\nArquivos deletados!");
     }
     printf("\n\nSaindo do Programa...");

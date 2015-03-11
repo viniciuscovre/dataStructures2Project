@@ -3,9 +3,9 @@ DESCRIÇÃO: Inicializa o Arquivo Principal 1.
            Inicializa os arquivos de índices de Árvore B e de Hash.
 PARÂMETROS: AP1 - Arquivo Principal 1
             BTidx - Arquivo de índice de Árvore B
-            Hidx - Arquivo de índice de Hash
+            HASHidx - Arquivo de índice de Hash
 *******************************************************************************/
-void InicializaArquivos(FILE **AP1, FILE **BTidx);
+void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx);
 
 
 /*******************************************************************************
@@ -21,8 +21,9 @@ DESCRIÇÃO: Verifica se os arquivos já foram criados. Se não, cria-os.
 PARÂMETROS: AP1 - Arquivo Principal 1
             AP2 - Arquivo Principal 2
             BTidx - Arquivo de índice de Árvore B
+            HASHidx - Arquivo de índice de Hash
 *******************************************************************************/
-void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx);
+void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx);
 
 
 /*******************************************************************************
@@ -55,8 +56,9 @@ DESCRIÇÃO: Realiza o cadastro de vacinas.
 PARÂMETROS: AP1 - Arquivo principal 1
             AP2 - Arquivo principal 2
             BTidx - Arquivo de índice de Árvore B
+            HASHidx - Arquivo de índice de Hash
 *******************************************************************************/
-void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx);
+void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx);
 
 
 /*******************************************************************************

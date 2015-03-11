@@ -9,11 +9,13 @@ UNESP - Rio Claro.
 #include <stdio.h>
 #include <conio.h>
 #include "functions.h"
+#include "bt.h"
+#include "hash.h"
 
 int main()
 {
-    FILE *AP1, *AP2, *BTidx;
-    AbreArquivos(&AP1, &AP2, &BTidx);
+    FILE *AP1, *AP2, *BTidx, *HASHidx;
+    AbreArquivos(&AP1, &AP2, &BTidx, &HASHidx);
     
     int promoted; /* Booleano: diz se houve promoção da página */
     short int root, /* RRN da página Raíz */
@@ -28,7 +30,7 @@ int main()
 	    {
 	        case 1: CadastraCachorro(&AP2); 
                     break;
-	        case 2: CadastraVacina(&AP1, &AP2, &BTidx);
+	        case 2: CadastraVacina(&AP1, &AP2, &BTidx, &HASHidx);
 	                /* Inicializa Árvore B */
 	                /*if (btopen())
                     {
@@ -62,6 +64,7 @@ int main()
 	        case 0: fclose(AP1); 
 					fclose(AP2);
 					fclose(BTidx);
+					fclose(HASHidx);
 					DeletarArquivos();
                     return 0;
 	        default: printf("\nOpcao invalida!"); 

@@ -1,12 +1,13 @@
 /*******************************************************************************
-DESCRIÇÃO DO ARQUIVO: Esse arquivo.cpp reúne as funções que utlilizam dos
-arquivos do projeto. Em outras palavras, é o conjunto de funções relacionadas
-a operações de main nos arquivos binários.
+DESCRIÇÃO DO ARQUIVO: Esse arquivo reúne as funções que utlilizam dos arquivos 
+do projeto. Em outras palavras, é o conjunto de funções relacionadas a operações
+de main nos arquivos binários, mas não nas estruturas Hash e Árvore B.
 *******************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
 #include <conio.h>
 #include "bt.h"
+#include "hash.h"
 
 /* Define um tipo para o cadastro de vacinas (AP1) */
 typedef struct
@@ -34,8 +35,9 @@ int btfd; /* Descrição do Arquivo de Árvore B */ //??
 int infd; /* Descrição do Arquivo de Entrada */ //??
 
 BTIDX btidx; /* Declara índice primário de Árvore B */
+//HASHIDX hashidx; /* Declara índice primário de Hash */
 
-void InicializaArquivos(FILE **AP1, FILE **BTidx)
+void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx)
 {
     rewind(*AP1);
     short int aux = -1; /* -1 indica que o arquivo (AP1) está vazio */
@@ -43,7 +45,12 @@ void InicializaArquivos(FILE **AP1, FILE **BTidx)
     
     rewind(*BTidx);
     btidx.keycount = 0; /* Indica que a Página tem zero registros */
-    fwrite(&btidx.keycount, PAGESIZE, 1, *BTidx);
+    fwrite(&btidx.keycount, sizeof(int), 1, *BTidx); /*VERIFICAR!!!*/
+    
+    rewind(*HASHidx);
+    /* Escreve o header no arquivo de índice Hash */
+    fwrite(&btidx.keycount, sizeof(int), 1, *HASHidx);
+    /* btidx.keycount é usado como coringa */
 }
 
 int NumCachorros(FILE **AP2)
@@ -56,7 +63,7 @@ int NumCachorros(FILE **AP2)
     return aux;
 }
 
-void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx)
+void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
 {
     /* Para AP1 */
     if((*AP1 = fopen("AP1.bin","r+b")) == NULL) /* Se o arquivo não existir */
@@ -77,7 +84,15 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx)
             return;
         }
         
-        InicializaArquivos(AP1, BTidx);
+        /* Cria o arquivo de índice de Hash 'HASHidx' */
+        if((*HASHidx = fopen("HASHidx.bin","w+b")) == NULL) /* Cria o arquivo com w+b */
+        {
+            printf("Erro em HASHidx. Abortando...");
+            getch();
+            return;
+        }
+
+        InicializaArquivos(AP1, BTidx, HASHidx);
     }
     else /* Se o arquivo já existir */
     {
@@ -87,9 +102,9 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx)
             getch();
             return;
         }
+        
         rewind(*AP1);
         fread(&root, sizeof(short int), 1, *AP1); /* Pega o Header da Árvore B de AP1 */
-        
         if((*BTidx = fopen("BTidx.bin","w+b")) == NULL)
         { /* Apenas abre para leitura e escrita */
             printf("Erro em BTidx. Abortando...");
@@ -97,6 +112,13 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx)
             return;
         }
         rewind(*BTidx);
+        
+        if((*HASHidx = fopen("HASHidx.bin","w+b")) == NULL)
+        { /* Apenas abre para leitura e escrita */
+            printf("Erro em HASHidx. Abortando...");
+            getch();
+            return;
+        }
     }
     
     /* Para AP2 */
@@ -193,7 +215,7 @@ int PerguntaCodigo(FILE **AP2)
     return cod;
 }
 
-void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx)
+void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
 {
     VACINA reg;
     
@@ -216,30 +238,9 @@ void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx)
     
     fseek(*AP1, sizeof(int), SEEK_SET); /* Pula o header de AP1 */
     fwrite(&reg, sizeof(VACINA), 1, *AP1);
-}
-
-/*void InicializaBT()
-{
-    int promoted; // boolean: tells if a promotion from below
-    short root, // rrn of root page
-          promo_rrn; // rrn promoted from below
-    char promo_key, // key promoted from below
-         key; // next key to insert in tree
-         
-    if (btopen())
-    {
-        root = getroot();
-    }
-    else
-    {
-        root = create_tree();
-    }
     
-    while ((key = getchar()) != 'q')
-    {
-        promoted = insert(root, key, &promo_rrn, &promo_key);
-        if (promoted)
-        root = create_root(promo_key, root, promo_rrn);
-    }
-    btclose();
-}*/
+    //INSERIR EM HASH
+    int endereco = h(reg.cod_controle);
+    Hash_Insere(HASHidx, reg.cod_controle ,endereco);
+    //INSERIR EM BT
+}
