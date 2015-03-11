@@ -8,7 +8,8 @@
 
 typedef struct
 {
-    int status, chave, rrn;
+    short int status[TAM_CESTO];
+    int chave[TAM_CESTO], rrn[TAM_CESTO];
 } HASHIDX;
 
 /*******************************************************************************
@@ -22,6 +23,14 @@ PARÂMETRO: k - chave.
 RETORNO: Endereço a partir da chave k.
 *******************************************************************************/
 int h(int k);
+
+
+/*******************************************************************************
+DESCRIÇÃO: Procura um espaço vazio no cesto.
+PARÂMETRO: HASHidx - Arquivo de índice de Hash
+RETORNO: Endereço de um espaço livre no cesto (-1 se o cesto está todo ocupado)
+*******************************************************************************/
+int Hash_VerificaStatus(FILE **HASHidx);
 
 
 /*******************************************************************************

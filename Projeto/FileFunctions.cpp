@@ -155,7 +155,7 @@ void CadastraCachorro(FILE **AP2)
 
 	cont++;
 	reg.cod_cachorro = cont;
-	printf(" Codigo: %d\n", reg.cod_cachorro);
+	printf("\n Codigo: %d\n", reg.cod_cachorro);
 	fflush(stdin);
 	printf(" Raca: ");
 	gets(reg.raca);
@@ -240,7 +240,8 @@ void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
     fwrite(&reg, sizeof(VACINA), 1, *AP1);
     
     //INSERIR EM HASH
-    int endereco = h(reg.cod_controle);
+    int endereco = h(reg.cod_controle); 
+    printf("\nENDERECO: %d\nCHAVE: %d", endereco, reg.cod_controle); getch();
     Hash_Insere(HASHidx, reg.cod_controle ,endereco);
     //INSERIR EM BT
 }
