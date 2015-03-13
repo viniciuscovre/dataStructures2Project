@@ -1,27 +1,16 @@
-/* BT_FIleFunctions.cpp */
+#include <stdio.h>
+#include <stdlib.h>
+#include "bt.h"
 
-/*void InicializaBT()
-{
-    int promoted; // boolean: tells if a promotion from below
-    short root, // rrn of root page
-          promo_rrn; // rrn promoted from below
-    char promo_key, // key promoted from below
-         key; // next key to insert in tree
-         
-    if (btopen())
-    {
-        root = getroot();
+int insert(FILE **BTidx, int root, int key, int upKey) {
+    if (root == -1) {
+        upKey = key;
+        return 1;
+    } else {
+        PAGE *newPage = (PAGE*) malloc (PAGESIZE);
+        fseek(*BTidx, root, SEEK_SET);
+        fread(newPage, PAGESIZE, 1, *BTidx);
+        
+                
     }
-    else
-    {
-        root = create_tree();
-    }
-    
-    while ((key = getchar()) != 'q')
-    {
-        promoted = insert(root, key, &promo_rrn, &promo_key);
-        if (promoted)
-        root = create_root(promo_key, root, promo_rrn);
-    }
-    btclose();
-}*/
+}

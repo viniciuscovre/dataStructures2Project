@@ -31,23 +31,6 @@ int main()
 	        case 1: CadastraCachorro(&AP2); 
                     break;
 	        case 2: CadastraVacina(&AP1, &AP2, &BTidx, &HASHidx);
-	                /* Inicializa Árvore B */
-	                /*if (btopen())
-                    {
-                        root = getroot();
-                    }
-                    else
-                    {
-                        root = create_tree();
-                    }
-    
-                    while ((key = getchar()) != 'q')
-                    {
-                        promoted = insert(root, key, &promo_rrn, &promo_key);
-                        if (promoted)
-                            root = create_root(promo_key, root, promo_rrn);
-                    }
-                    btclose();*/
                     break;
 			/*case 3: AlteraCachorro(&AP2);
                     break;

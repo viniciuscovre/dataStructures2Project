@@ -10,19 +10,20 @@
 #define NO 0
 #define YES 1
 
+typedef struct {
+    short int active;
+    int key;
+    int rrn;        
+} KEY;
+
 /* Define um tipo para a página de uma Árvore B */
-typedef struct
-{
+typedef struct BTPAGE {
     short int keycount; /* Número de chaves em uma página */
-    int chave[MAXKEYS]; /* Página Atual. */
-    short int child[MAXKEYS+1]; /* Ponteiros para os filhos */
-} BTIDX;
+    KEY chave[MAXKEYS]; /* Página Atual. */
+    int children[MAXKEYS+1]; /* Ponteiros para os filhos */
+} PAGE;
 
-#define PAGESIZE sizeof(BTIDX)
-
-extern short int root; // rrn of root page
-extern int btfd; // file descriptor of btree file
-extern int infd; // file descriptor of input file
+#define PAGESIZE sizeof(PAGE)
 
 /*******************************************************************************
                                     Fim.

@@ -8,8 +8,13 @@
 
 typedef struct
 {
-    short int status[TAM_CESTO];
-    int chave[TAM_CESTO], rrn[TAM_CESTO];
+    int chave, rrn;
+} CESTO;
+
+typedef struct
+{
+    short int cont;
+    CESTO cesto[TAM_CESTO];
 } HASHIDX;
 
 /*******************************************************************************
@@ -30,7 +35,7 @@ DESCRIÇÃO: Procura um espaço vazio no cesto.
 PARÂMETRO: HASHidx - Arquivo de índice de Hash
 RETORNO: Endereço de um espaço livre no cesto (-1 se o cesto está todo ocupado)
 *******************************************************************************/
-int Hash_VerificaStatus(FILE **HASHidx);
+/*int Hash_Verifica(FILE **HASHidx);*/
 
 
 /*******************************************************************************

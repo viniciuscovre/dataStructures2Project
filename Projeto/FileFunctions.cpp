@@ -34,7 +34,7 @@ short int root; /* Declara o cabeçalho do arquivo AP1: RRN da Página Raíz */
 int btfd; /* Descrição do Arquivo de Árvore B */ //??
 int infd; /* Descrição do Arquivo de Entrada */ //??
 
-BTIDX btidx; /* Declara índice primário de Árvore B */
+PAGE btidx; /* Declara índice primário de Árvore B */
 //HASHIDX hashidx; /* Declara índice primário de Hash */
 
 void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx)
@@ -44,7 +44,7 @@ void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx)
     fwrite(&aux, sizeof(short int), 1, *AP1);
     
     rewind(*BTidx);
-    btidx.keycount = 0; /* Indica que a Página tem zero registros */
+    btidx.keycount = -1; /* Indica que a Página tem zero registros */
     fwrite(&btidx.keycount, sizeof(int), 1, *BTidx); /*VERIFICAR!!!*/
     
     rewind(*HASHidx);
@@ -96,7 +96,7 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
     }
     else /* Se o arquivo já existir */
     {
-        if((*AP1 = fopen("AP1.bin","w+b")) == NULL) /* Apenas abre para leitura e escrita */
+        if((*AP1 = fopen("AP1.bin","r+b")) == NULL) /* Apenas abre para leitura e escrita */
         {
             printf("Erro em AP1. Abortando...");
             getch();
@@ -136,7 +136,7 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
     }
     else /* Se o arquivo já existir */
     {
-        if((*AP2 = fopen("AP2.bin","w+b")) == NULL) /* Apenas abre para leitura e escrita */
+        if((*AP2 = fopen("AP2.bin","r+b")) == NULL) /* Apenas abre para leitura e escrita */
         {
             printf("Erro em AP2. Abortando...");
             getch();
@@ -244,4 +244,5 @@ void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
     printf("\nENDERECO: %d\nCHAVE: %d", endereco, reg.cod_controle); getch();
     Hash_Insere(HASHidx, reg.cod_controle ,endereco);
     //INSERIR EM BT
+    
 }
