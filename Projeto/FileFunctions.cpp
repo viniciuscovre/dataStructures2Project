@@ -47,11 +47,11 @@ void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx)
     btidx.keycount = -1; /* Indica que a Página tem zero registros */
     fwrite(&btidx.keycount, sizeof(int), 1, *BTidx);
     
-    /*rewind(*HASHidx);
+    rewind(*HASHidx);
     HASHIDX reg;
     reg.cont = 0;
     for(int i=0; i<M; i++)
-      fwrite(&reg, sizeof(HASHIDX), 1, *HASHidx);*/
+      fwrite(&reg, sizeof(HASHIDX), 1, *HASHidx);
 }
 
 int NumCachorros(FILE **AP2)
