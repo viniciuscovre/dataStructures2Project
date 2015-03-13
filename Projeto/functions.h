@@ -46,7 +46,7 @@ int ExisteCachorro(int codigo, FILE **AP2);
 /*******************************************************************************
 DESCRIÇÃO: Pergunta o código do cachorro para posteriormente fazer uma operação.
 PARÂMETROS: AP2 - Arquivo Principal 2
-RETORNOS: Código do cachorro
+RETORNO: Código do cachorro
 *******************************************************************************/
 int PerguntaCodigo(FILE **AP2);
 
@@ -73,3 +73,19 @@ DESCRIÇÃO: Pergunta se o usuário quer deletar os arquivos do projeto. Se a
 resposta for 's', os arquivos são deletados da memória; caso contrário, não.
 *******************************************************************************/
 void DeletarArquivos();
+
+
+/*******************************************************************************
+DESCRIÇÃO: Pergunta a chave a ser procurada (e exibidos seus dados).
+RETORNO: Retorna a chave que o usuário quer que os dados sejam listados.
+*******************************************************************************/
+int PerguntaChave();
+
+
+/*******************************************************************************
+DESCRIÇÃO: Pergunta o método de busca e exibição dos dados de uma dada chave 
+(por Hash ou Árvore B).
+RETORNOS: 1 - Hash
+          0 - Árvore B
+*******************************************************************************/
+int ListaDados();

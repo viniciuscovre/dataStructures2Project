@@ -1,14 +1,11 @@
-/*******************************************************************************
-                     Cria a estrutura de dados de Hash.
-*******************************************************************************/
-
+/* Cria a estrutura de dados de Hash. */
 #define M 11
 //#define TAM_HASH 11
 #define TAM_CESTO 2
 
 typedef struct
 {
-    int chave, rrn;
+    int chave, offset;
 } CESTO;
 
 typedef struct
@@ -16,10 +13,6 @@ typedef struct
     short int cont;
     CESTO cesto[TAM_CESTO];
 } HASHIDX;
-
-/*******************************************************************************
-                                    Fim.
-*******************************************************************************/
 
 
 /*******************************************************************************
@@ -31,17 +24,19 @@ int h(int k);
 
 
 /*******************************************************************************
-DESCRIÇÃO: Procura um espaço vazio no cesto.
-PARÂMETRO: HASHidx - Arquivo de índice de Hash
-RETORNO: Endereço de um espaço livre no cesto (-1 se o cesto está todo ocupado)
-*******************************************************************************/
-/*int Hash_Verifica(FILE **HASHidx);*/
-
-
-/*******************************************************************************
 DESCRIÇÃO: Insere a chave em determinado endereço no arquivo de índice Hash.
 PARÂMETRO: HASHidx - Arquivo de índice de Hash
            chave - Chave a ser inserida (cod_controle)
-           endereco - Endereço a ser inserida a chave (gerado a partir da chave)
+           rrn - Endereço no índice Hash (gerado a partir da chave)
+           endereco - Endereço do registro no arquivo AP1
 *******************************************************************************/
-void Hash_Insere(FILE **HASHidx, int cahve, int endereco);
+void Hash_Insere(FILE **HASHidx, int cahve, int rrn, int endereco);
+
+
+/*******************************************************************************
+DESCRIÇÃO: Busca uma dada vacina e exibe seus dados (inclusive do cachorro).
+PARÂMETRO: chave - Chave a ser pesquisada (código de controle)
+           HASHidx - Arquivo de índice de Hash
+           AP2 - Arquivo Principal 2
+*******************************************************************************/
+void Hash_Pesquisa(int chave, FILE *HASHidx, FILE *AP2);

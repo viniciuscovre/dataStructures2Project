@@ -23,7 +23,7 @@ int main()
     int promo_chave, /* Chave promovida */
         chave; /* Próxima chave a ser inserida na árvore */
          
-    int opcao = Menu();
+    int key, opcao = Menu();
     while (1)
 	{
 	    switch(opcao)
@@ -32,18 +32,11 @@ int main()
                     break;
 	        case 2: CadastraVacina(&AP1, &AP2, &BTidx, &HASHidx);
                     break;
-			/*case 3: AlteraCachorro(&AP2);
-                    break;
-			case 4: AlteraDados(&AP1, &IndPrim, &IndSec1, &IndSec2);
-                    break;
-            case 5: MenuRemoveVacina(&AP1, &IndPrim, &IndSec1, &IndSec2);                   
-                    break;
-            case 6: PesquisaCodPrim(&AP1, &AP2);
-                    break;
-            case 7: PesquisaVacinaSec(&AP1, &AP2, &IndSec2);
-                    break;
-            case 8: Compacta(&AP1, &IndSec2);
-                    break; */
+			case 3: key = PerguntaChave();
+                    if(ListaDados())/* Busca em Hash */
+                        Hash_Pesquisa(key, HASHidx, AP2);
+                    //else /* Busca em Árvore B */
+			        break;
 	        case 0: fclose(AP1); 
 					fclose(AP2);
 					fclose(BTidx);

@@ -239,11 +239,12 @@ void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
     gets(reg.responsavel);
     
     fseek(*AP1, sizeof(int), SEEK_SET); /* Pula o header de AP1 */
+    int endereco = ftell(*AP1);
     fwrite(&reg, sizeof(VACINA), 1, *AP1);
     
     /* Insere na Hash */
-    int endereco = h(reg.cod_controle); 
-    Hash_Insere(HASHidx, reg.cod_controle ,endereco);
+    int rrn = h(reg.cod_controle); 
+    Hash_Insere(HASHidx, reg.cod_controle, rrn, endereco);
     //INSERIR EM BT
     
 }

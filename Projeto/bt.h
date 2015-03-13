@@ -1,6 +1,4 @@
-/*******************************************************************************
-                Cria a estrutura de dados de Árvores B.
-*******************************************************************************/
+/* Cria a estrutura de dados de Árvores B. */
 
 /* Definições de constantes para a Árvore B */
 #define MAXKEYS 4 /* Árvore B de ordem M (onde M = MAXKEYS + 1) */
@@ -25,9 +23,6 @@ typedef struct BTPAGE {
 
 #define PAGESIZE sizeof(PAGE)
 
-/*******************************************************************************
-                                    Fim.
-*******************************************************************************/
 
 void inicializarBT();
 
