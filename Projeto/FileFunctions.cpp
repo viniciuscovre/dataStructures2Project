@@ -45,12 +45,13 @@ void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx)
     
     rewind(*BTidx);
     btidx.keycount = -1; /* Indica que a Página tem zero registros */
-    fwrite(&btidx.keycount, sizeof(int), 1, *BTidx); /*VERIFICAR!!!*/
+    fwrite(&btidx.keycount, sizeof(int), 1, *BTidx);
     
-    rewind(*HASHidx);
-    /* Escreve o header no arquivo de índice Hash */
-    fwrite(&btidx.keycount, sizeof(int), 1, *HASHidx);
-    /* btidx.keycount é usado como coringa */
+    /*rewind(*HASHidx);
+    HASHIDX reg;
+    reg.cont = 0;
+    for(int i=0; i<M; i++)
+      fwrite(&reg, sizeof(HASHIDX), 1, *HASHidx);*/
 }
 
 int NumCachorros(FILE **AP2)
@@ -102,10 +103,10 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
             getch();
             return;
         }
-        
         rewind(*AP1);
         fread(&root, sizeof(short int), 1, *AP1); /* Pega o Header da Árvore B de AP1 */
-        if((*BTidx = fopen("BTidx.bin","w+b")) == NULL)
+        
+        if((*BTidx = fopen("BTidx.bin","r+b")) == NULL)
         { /* Apenas abre para leitura e escrita */
             printf("Erro em BTidx. Abortando...");
             getch();
@@ -113,12 +114,13 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
         }
         rewind(*BTidx);
         
-        if((*HASHidx = fopen("HASHidx.bin","w+b")) == NULL)
+        if((*HASHidx = fopen("HASHidx.bin","r+b")) == NULL)
         { /* Apenas abre para leitura e escrita */
             printf("Erro em HASHidx. Abortando...");
             getch();
             return;
         }
+        rewind(*HASHidx);
     }
     
     /* Para AP2 */
@@ -239,9 +241,8 @@ void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
     fseek(*AP1, sizeof(int), SEEK_SET); /* Pula o header de AP1 */
     fwrite(&reg, sizeof(VACINA), 1, *AP1);
     
-    //INSERIR EM HASH
+    /* Insere na Hash */
     int endereco = h(reg.cod_controle); 
-    printf("\nENDERECO: %d\nCHAVE: %d", endereco, reg.cod_controle); getch();
     Hash_Insere(HASHidx, reg.cod_controle ,endereco);
     //INSERIR EM BT
     
