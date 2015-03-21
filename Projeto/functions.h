@@ -57,8 +57,9 @@ PARÂMETROS: AP1 - Arquivo principal 1
             AP2 - Arquivo principal 2
             BTidx - Arquivo de índice de Árvore B
             HASHidx - Arquivo de índice de Hash
+RETORNO: offset - Byteoffset do cadastro (quando insere) no arquivo.
 *******************************************************************************/
-void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx);
+int CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx);
 
 
 /*******************************************************************************

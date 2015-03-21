@@ -104,7 +104,7 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
             return;
         }
         rewind(*AP1);
-        fread(&root, sizeof(short int), 1, *AP1); /* Pega o Header da Árvore B de AP1 */
+        fread(&root, sizeof(short int), 1, *AP1); /* Pega o Header de AP1 */
         
         if((*BTidx = fopen("BTidx.bin","r+b")) == NULL)
         { /* Apenas abre para leitura e escrita */
@@ -166,6 +166,8 @@ void CadastraCachorro(FILE **AP2)
 
 	fseek(*AP2, 0, SEEK_END); /* Seta a posição para o fim do arquivo */
 	fwrite(&reg, sizeof(CACHORRO), 1, *AP2); /* Escreve no fim do arquivo */
+	printf("\n Cachorro cadastrado com sucesso!");
+	getch();
 }
 
 int ExisteCachorro(int codigo, FILE **AP2)
@@ -233,18 +235,18 @@ void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
     fflush(stdin);
     printf("\n Nome da vacina: ");
     gets(reg.vacina);
+    fflush(stdin);
     printf(" Data de vacinacao <MM/AA>: ");
     gets(reg.data);
     printf(" Responsavel pela aplicacao: ");
     gets(reg.responsavel);
     
-    fseek(*AP1, sizeof(int), SEEK_SET); /* Pula o header de AP1 */
-    int endereco = ftell(*AP1);
+    fseek(*AP1, 0, SEEK_END); /* Vai para o final de AP1 para escrever reg */
+    int offset = ftell(*AP1);
     fwrite(&reg, sizeof(VACINA), 1, *AP1);
     
     /* Insere na Hash */
     int rrn = h(reg.cod_controle); 
-    Hash_Insere(HASHidx, reg.cod_controle, rrn, endereco);
+    Hash_Insere(HASHidx, reg.cod_controle, rrn, offset, 1);
     //INSERIR EM BT
-    
 }

@@ -18,7 +18,7 @@ typedef struct
 /*******************************************************************************
 DESCRIÇÃO: Função hashing h(k) que transforma uma chave k em um endereço.
 PARÂMETRO: k - chave.
-RETORNO: Endereço a partir da chave k.
+RETORNO: RRN a partir da chave k.
 *******************************************************************************/
 int h(int k);
 
@@ -28,15 +28,26 @@ DESCRIÇÃO: Insere a chave em determinado endereço no arquivo de índice Hash.
 PARÂMETRO: HASHidx - Arquivo de índice de Hash
            chave - Chave a ser inserida (cod_controle)
            rrn - Endereço no índice Hash (gerado a partir da chave)
-           endereco - Endereço do registro no arquivo AP1
+           offset - Endereço do registro no arquivo AP1
+           tentativa - Número de tentativas de inserção até dar certo
 *******************************************************************************/
-void Hash_Insere(FILE **HASHidx, int cahve, int rrn, int endereco);
+void Hash_Insere(FILE **HASHidx, int chave, int rrn, int offset, int tentativa);
+
+
+/*******************************************************************************
+DESCRIÇÃO: Imprime os dados de uma vacinação.
+PARÂMETRO: AP1 - Arquivo Principal 1
+           offset - Byteoffset de uma chave no arquivo AP1
+*******************************************************************************/
+void Hash_Imprime(FILE *AP1, int offset);
 
 
 /*******************************************************************************
 DESCRIÇÃO: Busca uma dada vacina e exibe seus dados (inclusive do cachorro).
 PARÂMETRO: chave - Chave a ser pesquisada (código de controle)
+           rrn - Endereço no índice Hash (gerado a partir da chave)
+           acessos - Número de acessos para encontrar a chave.
            HASHidx - Arquivo de índice de Hash
-           AP2 - Arquivo Principal 2
+           AP1 - Arquivo Principal 1
 *******************************************************************************/
-void Hash_Pesquisa(int chave, FILE *HASHidx, FILE *AP2);
+void Hash_Pesquisa(int chave, int rrn, int acessos, FILE *HASHidx, FILE *AP2);

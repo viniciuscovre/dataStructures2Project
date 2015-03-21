@@ -10,7 +10,5 @@ int insert(FILE **BTidx, int root, int key, int upKey) {
         PAGE *newPage = (PAGE*) malloc (PAGESIZE);
         fseek(*BTidx, root, SEEK_SET);
         fread(newPage, PAGESIZE, 1, *BTidx);
-        
-                
     }
 }

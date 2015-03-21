@@ -14,6 +14,7 @@ UNESP - Rio Claro.
 
 int main()
 {
+    int key, opcao;
     FILE *AP1, *AP2, *BTidx, *HASHidx;
     AbreArquivos(&AP1, &AP2, &BTidx, &HASHidx);
     
@@ -23,7 +24,7 @@ int main()
     int promo_chave, /* Chave promovida */
         chave; /* Próxima chave a ser inserida na árvore */
          
-    int key, opcao = Menu();
+    opcao = Menu();
     while (1)
 	{
 	    switch(opcao)
@@ -34,7 +35,10 @@ int main()
                     break;
 			case 3: key = PerguntaChave();
                     if(ListaDados())/* Busca em Hash */
-                        Hash_Pesquisa(key, HASHidx, AP2);
+                    {
+                        int aux = h(key);
+                        Hash_Pesquisa(key, aux, 1, HASHidx, AP1);
+                    }
                     //else /* Busca em Árvore B */
 			        break;
 	        case 0: fclose(AP1); 
