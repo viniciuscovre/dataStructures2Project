@@ -19,8 +19,8 @@ int main()
     AbreArquivos(&AP1, &AP2, &BTidx, &HASHidx);
     
     int promoted; /* Booleano: diz se houve promoção da página */
-    short int root, /* RRN da página Raíz */
-              promo_rrn; /* RRN da página promovida */
+    int root, /* RRN da página Raíz */
+        promo_rrn; /* RRN da página promovida */
     int promo_chave, /* Chave promovida */
         chave; /* Próxima chave a ser inserida na árvore */
          

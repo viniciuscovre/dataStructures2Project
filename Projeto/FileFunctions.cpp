@@ -30,7 +30,7 @@ typedef struct
 /* Header de AP2 com o código do último cachorro cadastrado */
 int cont; /* Auto-Incremento */
 
-short int root; /* Declara o cabeçalho do arquivo AP1: RRN da Página Raíz */
+int root; /* Declara o cabeçalho do arquivo AP1: RRN da Página Raíz */
 int btfd; /* Descrição do Arquivo de Árvore B */ //??
 int infd; /* Descrição do Arquivo de Entrada */ //??
 
@@ -40,16 +40,21 @@ PAGE btidx; /* Declara índice primário de Árvore B */
 void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx)
 {
     rewind(*AP1);
-    short int aux = -1; /* -1 indica que o arquivo (AP1) está vazio */
-    fwrite(&aux, sizeof(short int), 1, *AP1);
+    int aux = -1; /* -1 indica que o arquivo (AP1) está vazio */
+    fwrite(&aux, sizeof(int), 1, *AP1);
     
     rewind(*BTidx);
     btidx.keycount = -1; /* Indica que a Página tem zero registros */
     fwrite(&btidx.keycount, sizeof(int), 1, *BTidx);
     
-    rewind(*HASHidx);
     HASHIDX reg;
     reg.cont = 0;
+    for(int i=0; i<TAM_CESTO; i++)
+    {
+        reg.cesto[i].chave = -1;
+        reg.cesto[i].offset = -1;
+    }
+    rewind(*HASHidx);
     for(int i=0; i<M; i++)
       fwrite(&reg, sizeof(HASHIDX), 1, *HASHidx);
 }
@@ -104,7 +109,7 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
             return;
         }
         rewind(*AP1);
-        fread(&root, sizeof(short int), 1, *AP1); /* Pega o Header de AP1 */
+        fread(&root, sizeof(int), 1, *AP1); /* Pega o Header de AP1 */
         
         if((*BTidx = fopen("BTidx.bin","r+b")) == NULL)
         { /* Apenas abre para leitura e escrita */

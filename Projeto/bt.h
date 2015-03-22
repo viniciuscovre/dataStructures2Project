@@ -9,14 +9,14 @@
 #define YES 1
 
 typedef struct {
-    short int active;
+    int active;
     int key;
     int rrn;        
 } KEY;
 
 /* Define um tipo para a página de uma Árvore B */
 typedef struct BTPAGE {
-    short int keycount; /* Número de chaves em uma página */
+    int keycount; /* Número de chaves em uma página */
     KEY chave[MAXKEYS]; /* Página Atual. */
     int children[MAXKEYS+1]; /* Ponteiros para os filhos */
 } PAGE;

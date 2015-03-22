@@ -1,6 +1,5 @@
 /* Cria a estrutura de dados de Hash. */
 #define M 11
-//#define TAM_HASH 11
 #define TAM_CESTO 2
 
 typedef struct
@@ -10,7 +9,7 @@ typedef struct
 
 typedef struct
 {
-    short int cont;
+    int cont;
     CESTO cesto[TAM_CESTO];
 } HASHIDX;
 
