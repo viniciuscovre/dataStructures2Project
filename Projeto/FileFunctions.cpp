@@ -49,11 +49,6 @@ void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx)
     
     HASHIDX reg;
     reg.cont = 0;
-    for(int i=0; i<TAM_CESTO; i++)
-    {
-        reg.cesto[i].chave = -1;
-        reg.cesto[i].offset = -1;
-    }
     rewind(*HASHidx);
     for(int i=0; i<M; i++)
       fwrite(&reg, sizeof(HASHIDX), 1, *HASHidx);
@@ -137,9 +132,6 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
             getch();
             return;
         }
-        printf("\n\nO ARQUIVO NAO EXISTE!\n\n");
-        cont = 0;
-        printf("\n\n%d\n\n", cont); getch();
     }
     else /* Se o arquivo já existir */
     {
@@ -149,9 +141,6 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
             getch();
             return;
         }
-        printf("\n\nO ARQUIVO EXISTE!\n\n");
-        cont = NumCachorros(AP2);
-        printf("\n\n%d\n\n", cont); getch();
     }
 }
 

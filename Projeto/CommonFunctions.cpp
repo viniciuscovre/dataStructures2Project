@@ -23,7 +23,7 @@ int Menu()
 	return opcao;
 }
 
-void DeletarArquivos()
+/*void DeletarArquivos()
 {
     char resp;
     printf("\n\nDeletar Arquivos? (S/N): ");
@@ -39,7 +39,7 @@ void DeletarArquivos()
     }
     printf("\n\nSaindo do Programa...");
     getch();
-}
+}*/
 
 int PerguntaChave()
 {

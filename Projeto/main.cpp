@@ -45,7 +45,7 @@ int main()
 					fclose(AP2);
 					fclose(BTidx);
 					fclose(HASHidx);
-					DeletarArquivos();
+					//DeletarArquivos();
                     return 0;
 	        default: printf("\nOpcao invalida!"); 
                      getch();

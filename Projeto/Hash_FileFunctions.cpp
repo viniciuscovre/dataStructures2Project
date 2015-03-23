@@ -55,7 +55,7 @@ void Hash_Imprime(FILE *AP1, int offset)
     
     fseek(AP1, offset, SEEK_SET);
     fread(&reg, sizeof(VACINA), 1,  AP1);
-    printf("\n\nBYTEOFFSET: %d", offset);
+    
     printf("\n\n DADOS DA VACINA %d", reg.cod_controle);
     printf("\n\n Codigo do Cachorro %c %d", 175, reg.cod_cachorro);
     printf("\n Nome da Vacina %c %s", 175, reg.vacina);
@@ -101,7 +101,7 @@ void Hash_Pesquisa(int chave, int rrn, int acessos, FILE *HASHidx, FILE *AP1)
     {
         for(int i=0; i<TAM_CESTO; i++)
         {
-            if(reg.cesto[i].chave == chave);
+            if(reg.cesto[i].chave == chave)
             {
                 /*printf("\n Chave %d encontrada, endereco %d,", reg.cesto[i].chave, rrn);*/
                 printf("\n Chave %d encontrada, endereco %d,", chave, rrn);
