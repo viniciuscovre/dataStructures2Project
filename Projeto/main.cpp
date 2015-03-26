@@ -15,14 +15,9 @@ UNESP - Rio Claro.
 int main()
 {
     int key, opcao;
+    
     FILE *AP1, *AP2, *BTidx, *HASHidx;
     AbreArquivos(&AP1, &AP2, &BTidx, &HASHidx);
-    
-    int promoted; /* Booleano: diz se houve promoção da página */
-    int root, /* RRN da página Raíz */
-        promo_rrn; /* RRN da página promovida */
-    int promo_chave, /* Chave promovida */
-        chave; /* Próxima chave a ser inserida na árvore */
          
     opcao = Menu();
     while (1)
@@ -34,12 +29,15 @@ int main()
 	        case 2: CadastraVacina(&AP1, &AP2, &BTidx, &HASHidx);
                     break;
 			case 3: key = PerguntaChave();
-                    if(ListaDados())/* Busca em Hash */
+                    if(ListaDados()) /* Busca em Hash */
                     {
                         int aux = h(key);
                         Hash_Pesquisa(key, aux, 1, HASHidx, AP1);
                     }
-                    //else /* Busca em Árvore B */
+                    else /* Busca em Árvore B */
+                    {
+                        
+                    }
 			        break;
 	        case 0: fclose(AP1); 
 					fclose(AP2);

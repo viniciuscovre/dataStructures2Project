@@ -22,9 +22,6 @@ void Hash_Insere(FILE **HASHidx, int chave, int rrn, int offset, int tentativa)
 {
     HASHIDX reg;
     
-    /*if(fseek(*HASHidx, sizeof(HASHIDX)*(rrn) , SEEK_SET))/* Se der erro em fseek */
-    /*printf("\nERRO ao dar Seeking no arquivo de indice!\nInicializacao incorreta...\n");*/
-    
     fseek(*HASHidx, sizeof(HASHIDX)*(rrn) , SEEK_SET);
     fread(&reg, sizeof(HASHIDX), 1, *HASHidx);
     
@@ -38,7 +35,7 @@ void Hash_Insere(FILE **HASHidx, int chave, int rrn, int offset, int tentativa)
         fwrite(&reg, sizeof(HASHIDX), 1, *HASHidx);
         
         printf("\nEndereco: %d. ByteOffset: %d", rrn, reg.cesto[reg.cont-1].offset);
-        printf("\nChave %d inserida com sucesso!\n", reg.cesto[reg.cont-1].chave);
+        printf("\nChave %d inserida na Hash com sucesso!\n", reg.cesto[reg.cont-1].chave);
         getch();
     }
     else /* reg.cont == 2 */
@@ -82,8 +79,7 @@ void Hash_Pesquisa(int chave, int rrn, int acessos, FILE *HASHidx, FILE *AP1)
     {
         if(reg.cesto[reg.cont-1].chave == chave)
         {
-            /*printf("\n Chave %d encontrada, endereco %d,", reg.cesto[reg.cont-1].chave, rrn);*/
-            printf("\n Chave %d encontrada, endereco %d,", chave, rrn);
+            printf("\n Chave %d encontrada, endereco %d,", reg.cesto[reg.cont-1].chave, rrn);
             printf(" %d acesso(s)", acessos);
             Hash_Imprime(AP1, reg.cesto[reg.cont-1].offset);
             getch();
@@ -103,14 +99,20 @@ void Hash_Pesquisa(int chave, int rrn, int acessos, FILE *HASHidx, FILE *AP1)
         {
             if(reg.cesto[i].chave == chave)
             {
-                /*printf("\n Chave %d encontrada, endereco %d,", reg.cesto[i].chave, rrn);*/
-                printf("\n Chave %d encontrada, endereco %d,", chave, rrn);
+                printf("\n Chave %d encontrada, endereco %d,", reg.cesto[i].chave, rrn);
                 printf(" %d acesso(s)", acessos);
                 Hash_Imprime(AP1, reg.cesto[i].offset);
                 getch();
                 return;
             }
         }
-        Hash_Pesquisa(chave, ++rrn, ++acessos, HASHidx, AP1);
+        rrn++;
+        if (rrn > M)
+        {
+            rrn = 0;
+            Hash_Pesquisa(chave, rrn, ++acessos, HASHidx, AP1);
+        }
+        else
+            Hash_Pesquisa(chave, rrn, ++acessos, HASHidx, AP1);
     }
 }

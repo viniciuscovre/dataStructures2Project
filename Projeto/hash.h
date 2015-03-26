@@ -1,4 +1,5 @@
 /* Cria a estrutura de dados de Hash. */
+
 #define M 11
 #define TAM_CESTO 2
 

@@ -2,42 +2,38 @@
 
 /* Definições de constantes para a Árvore B */
 #define MAXKEYS 4 /* Árvore B de ordem M (onde M = MAXKEYS + 1) */
-#define MINKEYS ceil((MAXKEYS+1)/2) /* Mínimo de nós em uma página (exceto para a raíz) */
+#define MINKEYS MAXKEYS/2 /* Mínimo de nós em uma página (exceto para a raíz) */
 #define NIL (-1)
 #define NOKEY '@'
 #define NO 0
 #define YES 1
 
-typedef struct {
-    int active;
-    int key;
-    int rrn;        
-} KEY;
+typedef struct 
+{
+    int id; /* Chave */
+    short rrn;
+} BTKEY;
 
-/* Define um tipo para a página de uma Árvore B */
-typedef struct BTPAGE {
-    int keycount; /* Número de chaves em uma página */
-    KEY chave[MAXKEYS]; /* Página Atual. */
-    int children[MAXKEYS+1]; /* Ponteiros para os filhos */
-} PAGE;
+typedef struct 
+{
+    short keycount; /* Número de chaves em uma página */
+    BTKEY key[MAXKEYS]; /* Página Atual. */
+    short child[MAXKEYS+1]; /* Ponteiros para os filhos */
+} BTPAGE;
 
-#define PAGESIZE sizeof(PAGE)
+#define PAGESIZE sizeof(BTPAGE)
 
-
-void inicializarBT();
-
-/*int btclose();
-btopen ();
-btread (short rrn, BTPAGE *page_ptr);
-btwrite (short rrn, BTPAGE *page_ptr);
-create_root (char key, short left, short right);
-short create_tree();
-short getpage ();
-short getroot ();
-insert (short rrn, char key, short *promo_r_child, char *promo_key);
-ins_in_page (char key,short r_child, BTPAGE *p_page);
-pageinit (BTPAGE *p_page);
-putroot(short root);
-search_node (char key, BTPAGE *p_page, short *pos);
-split(char key, short r_child, BTPAGE *p_oldpage, char *promo_key, short *promo_r_child, BTPAGE *p_newpage);
-*/
+int btopen(FILE **BTidx);
+short getroot(FILE **BTidx);
+void putroot(short root, FILE **BTidx);
+int btread(short rrn, BTPAGE *page, FILE **BTidx);
+int searchnode(int id, BTPAGE *page, short *pos);
+void insertpage(BTKEY key, short r_child, BTPAGE *page);
+int btwrite(short rrn, BTPAGE *page, FILE **BTidx);
+short newpage(FILE **BTidx);
+void initpage(BTPAGE *page);
+short createroot(BTKEY key, short left, short right, FILE **BTidx);
+short createtree(FILE **BTidx);
+void split(BTKEY key, short r_child, BTPAGE *p_oldpage, BTKEY *promo_key, short *promo_r_child, BTPAGE *p_newpage, FILE **BTidx);
+int insert(short rrn, BTKEY key, short *promo_r_child, BTKEY *promo_key, int *found, FILE **BTidx);
+void insertnode(short root, BTKEY key, FILE **BTidx);

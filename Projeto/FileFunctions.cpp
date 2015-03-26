@@ -27,15 +27,8 @@ typedef struct
     char nome[30];
 } CACHORRO;
 
-/* Header de AP2 com o código do último cachorro cadastrado */
+int header;
 int cont; /* Auto-Incremento */
-
-int root; /* Declara o cabeçalho do arquivo AP1: RRN da Página Raíz */
-int btfd; /* Descrição do Arquivo de Árvore B */ //??
-int infd; /* Descrição do Arquivo de Entrada */ //??
-
-PAGE btidx; /* Declara índice primário de Árvore B */
-//HASHIDX hashidx; /* Declara índice primário de Hash */
 
 void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx)
 {
@@ -43,9 +36,8 @@ void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx)
     int aux = -1; /* -1 indica que o arquivo (AP1) está vazio */
     fwrite(&aux, sizeof(int), 1, *AP1);
     
-    rewind(*BTidx);
-    btidx.keycount = -1; /* Indica que a Página tem zero registros */
-    fwrite(&btidx.keycount, sizeof(int), 1, *BTidx);
+    short root = NIL;
+    putroot(root, BTidx);
     
     HASHIDX reg;
     reg.cont = 0;
@@ -104,7 +96,7 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
             return;
         }
         rewind(*AP1);
-        fread(&root, sizeof(int), 1, *AP1); /* Pega o Header de AP1 */
+        fread(&header, sizeof(int), 1, *AP1); /* Pega o Header de AP1 */
         
         if((*BTidx = fopen("BTidx.bin","r+b")) == NULL)
         { /* Apenas abre para leitura e escrita */
@@ -242,5 +234,10 @@ void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
     /* Insere na Hash */
     int rrn = h(reg.cod_controle); 
     Hash_Insere(HASHidx, reg.cod_controle, rrn, offset, 1);
-    //INSERIR EM BT
+    
+    /* Insere em Árvore B */
+    BTKEY BTreg;
+    BTreg.id = reg.cod_controle;
+    BTreg.rrn = 1;
+    insertnode(getroot(BTidx), BTreg, BTidx);
 }
