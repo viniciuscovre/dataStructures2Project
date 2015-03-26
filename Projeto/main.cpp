@@ -36,7 +36,7 @@ int main()
                     }
                     else /* Busca em Árvore B */
                     {
-                        
+                        searchbtree(key, BTidx, AP1);
                     }
 			        break;
 	        case 0: fclose(AP1); 

@@ -9,7 +9,7 @@ typedef struct
     int cod_controle;
     int cod_cachorro;
     char vacina[30];
-    char data[5];
+    char data[6];
     char responsavel[30];
 } VACINA;
 
@@ -52,6 +52,8 @@ void Hash_Imprime(FILE *AP1, int offset)
     
     fseek(AP1, offset, SEEK_SET);
     fread(&reg, sizeof(VACINA), 1,  AP1);
+    
+    printf(" RRN %d", offset);
     
     printf("\n\n DADOS DA VACINA %d", reg.cod_controle);
     printf("\n\n Codigo do Cachorro %c %d", 175, reg.cod_cachorro);

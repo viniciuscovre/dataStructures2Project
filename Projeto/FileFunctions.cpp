@@ -15,7 +15,7 @@ typedef struct
     int cod_controle;
     int cod_cachorro;
     char vacina[30];
-    char data[5];
+    char data[6];
     char responsavel[30];
 } VACINA;
 
@@ -238,6 +238,6 @@ void CadastraVacina(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
     /* Insere em Árvore B */
     BTKEY BTreg;
     BTreg.id = reg.cod_controle;
-    BTreg.rrn = 1;
+    BTreg.rrn = offset;
     insertnode(getroot(BTidx), BTreg, BTidx);
 }

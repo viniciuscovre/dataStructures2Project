@@ -3,6 +3,15 @@
 #include <conio.h>
 #include "bt.h"
 
+typedef struct
+{
+    int cod_controle;
+    int cod_cachorro;
+    char vacina[30];
+    char data[6];
+    char responsavel[30];
+} VACINA;
+
 //FILE *btree;
 
 int btopen(FILE **BTidx)
@@ -258,4 +267,44 @@ void insertnode(short root, BTKEY key, FILE **BTidx)
         printf("\n Chave %d inserida com sucesso em Arvore B\n", key.id);
         getch();
     }
+}
+
+void searchbtree(int key, FILE *BTidx, FILE *AP1) {
+     BTPAGE actualPage;
+     BTKEY node;
+     short pos;
+     int root;
+
+     VACINA reg;
+
+     root = getroot(&BTidx);
+     btread(root, &actualPage, &BTidx);
+     int found;
+     found = searchnode(key, &actualPage, &pos);
+
+     while (!found) {
+        if (root == NIL) {
+            printf("\n Chave %d nao encontrada\n", key);
+            getch();
+            return;
+        }
+        root = actualPage.child[pos];
+        btread(root, &actualPage, &BTidx);
+        found = searchnode(key, &actualPage, &pos);
+     }
+
+     printf("\n Chave %d encontrada, pagina %d, posicao %d", key, root, pos);
+
+     node = actualPage.key[pos];
+     fseek(AP1, node.rrn, 0);
+     fread(&reg, sizeof(VACINA), 1, AP1);
+     
+     printf(" RRN %d", node.rrn);
+
+     printf("\n\n DADOS DA VACINA %d", reg.cod_controle);
+     printf("\n\n Codigo do Cachorro %c %d", 175, reg.cod_cachorro);
+     printf("\n Nome da Vacina %c %s", 175, reg.vacina);
+     printf("\n Data de Vacinacao %c %s", 175, reg.data);
+     printf("\n Responsavel Pela Aplicacao %c %s", 175, reg.responsavel);
+     getch();
 }
