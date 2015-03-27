@@ -322,8 +322,6 @@ void recursiveprint(int root, FILE *BTidx, FILE *AP1)
     BTKEY node;
     BTPAGE page;
     VACINA reg;
-
-    system("CLS");
     
     if (root == NIL) return;
     btread(root, &page, &BTidx);

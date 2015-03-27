@@ -30,11 +30,14 @@ typedef struct
 int header;
 int cont; /* Auto-Incremento */
 
-void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx)
+void InicializaArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
 {
     rewind(*AP1);
     int aux = -1; /* -1 indica que o arquivo (AP1) está vazio */
     fwrite(&aux, sizeof(int), 1, *AP1);
+    
+    rewind(*AP2); /* lê o header de AP2, que é o codigo de cachorro (auto-incremento)*/
+    fwrite(&aux, sizeof(int), 1, *AP2);
     
     short root = NIL;
     putroot(root, BTidx);
@@ -69,6 +72,13 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
             return;
         }
         
+        if((*AP2 = fopen("AP2.bin","w+b")) == NULL) /* Cria o arquivo com w+b */
+        {
+            printf("Erro em AP2. Abortando...");
+            getch();
+            return;
+        }
+        
         /* Cria o arquivo de índice de Árvore B 'BTidx' */
         if((*BTidx = fopen("BTidx.bin","w+b")) == NULL) /* Cria o arquivo com w+b */
         {
@@ -85,7 +95,7 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
             return;
         }
 
-        InicializaArquivos(AP1, BTidx, HASHidx);
+        InicializaArquivos(AP1, AP2, BTidx, HASHidx);
     }
     else /* Se o arquivo já existir */
     {
@@ -97,6 +107,13 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
         }
         rewind(*AP1);
         fread(&header, sizeof(int), 1, *AP1); /* Pega o Header de AP1 */
+        
+        if((*AP2 = fopen("AP2.bin","r+b")) == NULL) /* Apenas abre para leitura e escrita */
+        {
+            printf("Erro em AP2. Abortando...");
+            getch();
+            return;
+        }
         
         if((*BTidx = fopen("BTidx.bin","r+b")) == NULL)
         { /* Apenas abre para leitura e escrita */
@@ -114,34 +131,17 @@ void AbreArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx)
         }
         rewind(*HASHidx);
     }
-    
-    /* Para AP2 */
-    if((*AP2 = fopen("AP2.bin","r+b")) == NULL) /* Se o arquivo não existir */
-    {
-        if((*AP2 = fopen("AP2.bin","w+b")) == NULL) /* Cria o arquivo com w+b */
-        {
-            printf("Erro em AP2. Abortando...");
-            getch();
-            return;
-        }
-    }
-    else /* Se o arquivo já existir */
-    {
-        if((*AP2 = fopen("AP2.bin","r+b")) == NULL) /* Apenas abre para leitura e escrita */
-        {
-            printf("Erro em AP2. Abortando...");
-            getch();
-            return;
-        }
-    }
 }
 
 void CadastraCachorro(FILE **AP2)
 {
 	CACHORRO reg;
 	system("CLS");
-
+    
+    rewind(*AP2);
+    fread(&cont, sizeof(int), 1, *AP2);
 	cont++;
+	
 	reg.cod_cachorro = cont;
 	printf("\n Codigo: %d\n", reg.cod_cachorro);
 	fflush(stdin);
@@ -152,15 +152,22 @@ void CadastraCachorro(FILE **AP2)
 
 	fseek(*AP2, 0, SEEK_END); /* Seta a posição para o fim do arquivo */
 	fwrite(&reg, sizeof(CACHORRO), 1, *AP2); /* Escreve no fim do arquivo */
+	
+	rewind(*AP2);
+	fwrite(&cont, sizeof(int), 1, *AP2);
+	
 	printf("\n Cachorro cadastrado com sucesso!");
 	getch();
 }
 
 int ExisteCachorro(int codigo, FILE **AP2)
 {
+    if(cont == -1)
+        return 0;
+        
 	CACHORRO reg;
 	
-	fseek(*AP2, 0, SEEK_SET);
+	fseek(*AP2, sizeof(int), SEEK_SET);
 	while (fread(&reg, sizeof(CACHORRO), 1, *AP2))
 	{
 		if (reg.cod_cachorro == codigo)

@@ -2,10 +2,11 @@
 DESCRIÇÃO: Inicializa o Arquivo Principal 1.
            Inicializa os arquivos de índices de Árvore B e de Hash.
 PARÂMETROS: AP1 - Arquivo Principal 1
+            AP2 - Arquivo Principal 2
             BTidx - Arquivo de índice de Árvore B
             HASHidx - Arquivo de índice de Hash
 *******************************************************************************/
-void InicializaArquivos(FILE **AP1, FILE **BTidx, FILE **HASHidx);
+void InicializaArquivos(FILE **AP1, FILE **AP2, FILE **BTidx, FILE **HASHidx);
 
 
 /*******************************************************************************
