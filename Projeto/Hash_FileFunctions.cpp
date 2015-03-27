@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "hash.h"
 
-/* Define um tipo para o cadastro de vacinas (AP1) */
 typedef struct
 {
     int cod_controle;
@@ -12,6 +11,13 @@ typedef struct
     char data[6];
     char responsavel[30];
 } VACINA;
+
+typedef struct
+{
+    int cod_cachorro;
+    char raca[30];
+    char nome[30];
+} CACHORRO;
 
 int h(int k)
 {
@@ -46,9 +52,10 @@ void Hash_Insere(FILE **HASHidx, int chave, int rrn, int offset, int tentativa)
     }
 }
 
-void Hash_Imprime(FILE *AP1, int offset)
+void Hash_Imprime(FILE *AP1, FILE *AP2, int offset)
 {
     VACINA reg;
+    CACHORRO reg1;
     
     fseek(AP1, offset, SEEK_SET);
     fread(&reg, sizeof(VACINA), 1,  AP1);
@@ -57,12 +64,24 @@ void Hash_Imprime(FILE *AP1, int offset)
     
     printf("\n\n DADOS DA VACINA %d", reg.cod_controle);
     printf("\n\n Codigo do Cachorro %c %d", 175, reg.cod_cachorro);
+    
+    fseek(AP2, sizeof(int), SEEK_SET);
+	while (fread(&reg1, sizeof(CACHORRO), 1, AP2))
+	{
+		if (reg1.cod_cachorro == reg.cod_cachorro)
+		{
+			break;
+		}	
+	}
+	printf("\n -  Raca %c %s", 175, reg1.raca);
+	printf("\n -  Nome %c %s", 175, reg1.nome);
+	
     printf("\n Nome da Vacina %c %s", 175, reg.vacina);
     printf("\n Data de Vacinacao %c %s", 175, reg.data);
     printf("\n Responsavel Pela Aplicacao %c %s", 175, reg.responsavel);   
 }
 
-void Hash_Pesquisa(int chave, int rrn, int acessos, FILE *HASHidx, FILE *AP1)
+void Hash_Pesquisa(int chave, int rrn, int acessos, FILE *HASHidx, FILE *AP1, FILE *AP2)
 {   
     HASHIDX reg;
     
@@ -83,7 +102,7 @@ void Hash_Pesquisa(int chave, int rrn, int acessos, FILE *HASHidx, FILE *AP1)
         {
             printf("\n Chave %d encontrada, endereco %d,", reg.cesto[reg.cont-1].chave, rrn);
             printf(" %d acesso(s)", acessos);
-            Hash_Imprime(AP1, reg.cesto[reg.cont-1].offset);
+            Hash_Imprime(AP1, AP2, reg.cesto[reg.cont-1].offset);
             getch();
             return;
         }
@@ -103,7 +122,7 @@ void Hash_Pesquisa(int chave, int rrn, int acessos, FILE *HASHidx, FILE *AP1)
             {
                 printf("\n Chave %d encontrada, endereco %d,", reg.cesto[i].chave, rrn);
                 printf(" %d acesso(s)", acessos);
-                Hash_Imprime(AP1, reg.cesto[i].offset);
+                Hash_Imprime(AP1, AP2, reg.cesto[i].offset);
                 getch();
                 return;
             }
@@ -112,9 +131,9 @@ void Hash_Pesquisa(int chave, int rrn, int acessos, FILE *HASHidx, FILE *AP1)
         if (rrn > M)
         {
             rrn = 0;
-            Hash_Pesquisa(chave, rrn, ++acessos, HASHidx, AP1);
+            Hash_Pesquisa(chave, rrn, ++acessos, HASHidx, AP1, AP2);
         }
         else
-            Hash_Pesquisa(chave, rrn, ++acessos, HASHidx, AP1);
+            Hash_Pesquisa(chave, rrn, ++acessos, HASHidx, AP1, AP2);
     }
 }

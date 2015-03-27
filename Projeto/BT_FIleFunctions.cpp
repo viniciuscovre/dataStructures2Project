@@ -12,6 +12,13 @@ typedef struct
     char responsavel[30];
 } VACINA;
 
+typedef struct
+{
+    int cod_cachorro;
+    char raca[30];
+    char nome[30];
+} CACHORRO;
+
 int btopen(FILE **BTidx)
 {
     *BTidx = fopen("BTidx.bin", "r+");
@@ -262,7 +269,7 @@ void insertnode(short root, BTKEY key, FILE **BTidx)
     }
 }
 
-void searchbtree(int key, FILE *BTidx, FILE *AP1) 
+void searchbtree(int key, FILE *BTidx, FILE *AP1, FILE *AP2) 
 {
      BTPAGE actualPage;
      BTKEY node;
@@ -270,6 +277,7 @@ void searchbtree(int key, FILE *BTidx, FILE *AP1)
      int root;
 
      VACINA reg;
+     CACHORRO reg1;
      
      system("CLS");
 
@@ -301,27 +309,38 @@ void searchbtree(int key, FILE *BTidx, FILE *AP1)
 
      printf("\n\n DADOS DA VACINA %d", reg.cod_controle);
      printf("\n\n Codigo do Cachorro %c %d", 175, reg.cod_cachorro);
+     fseek(AP2, sizeof(int), SEEK_SET);
+	 while (fread(&reg1, sizeof(CACHORRO), 1, AP2))
+	 {
+		 if (reg1.cod_cachorro == reg.cod_cachorro)
+		 {
+            break;
+		 }	
+	 }
+	 printf("\n -  Raca %c %s", 175, reg1.raca);
+	 printf("\n -  Nome %c %s", 175, reg1.nome);
      printf("\n Nome da Vacina %c %s", 175, reg.vacina);
      printf("\n Data de Vacinacao %c %s", 175, reg.data);
      printf("\n Responsavel Pela Aplicacao %c %s", 175, reg.responsavel);
      getch();
 }
 
-void getallnodes(FILE *BTidx, FILE *AP1) 
+void getallnodes(FILE *BTidx, FILE *AP1, FILE *AP2) 
 {
     int root;
     root = getroot(&BTidx);
-    recursiveprint(root, BTidx, AP1);
+    recursiveprint(root, BTidx, AP1, AP2);
 
     getch();
 }
 
-void recursiveprint(int root, FILE *BTidx, FILE *AP1) 
+void recursiveprint(int root, FILE *BTidx, FILE *AP1, FILE *AP2) 
 {
     int i;
     BTKEY node;
     BTPAGE page;
     VACINA reg;
+    CACHORRO reg1;
     
     if (root == NIL) return;
     btread(root, &page, &BTidx);
@@ -329,7 +348,7 @@ void recursiveprint(int root, FILE *BTidx, FILE *AP1)
     for (i = 0; i <= page.keycount; i++) 
     {
         root = page.child[i];
-        recursiveprint(root, BTidx, AP1);
+        recursiveprint(root, BTidx, AP1, AP2);
 
         if (i < page.keycount) 
         {
@@ -339,6 +358,17 @@ void recursiveprint(int root, FILE *BTidx, FILE *AP1)
             
             printf("\n\n DADOS DA VACINA %d", reg.cod_controle);
             printf("\n\n Codigo do Cachorro %c %d", 175, reg.cod_cachorro);
+            fseek(AP2, sizeof(int), SEEK_SET);
+	        while (fread(&reg1, sizeof(CACHORRO), 1, AP2))
+	        {
+		        if (reg1.cod_cachorro == reg.cod_cachorro)
+		        {
+                    break;
+		        }	
+            }
+            printf("\n -  Raca %c %s", 175, reg1.raca);
+	        printf("\n -  Nome %c %s", 175, reg1.nome);
+	        
             printf("\n Nome da Vacina %c %s", 175, reg.vacina);
             printf("\n Data de Vacinacao %c %s", 175, reg.data);
             printf("\n Responsavel Pela Aplicacao %c %s", 175, reg.responsavel);

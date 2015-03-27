@@ -37,9 +37,10 @@ void Hash_Insere(FILE **HASHidx, int chave, int rrn, int offset, int tentativa);
 /*******************************************************************************
 DESCRIÇÃO: Imprime os dados de uma vacinação.
 PARÂMETRO: AP1 - Arquivo Principal 1
+           AP2 - Arquivo Principal 2
            offset - Byteoffset de uma chave no arquivo AP1
 *******************************************************************************/
-void Hash_Imprime(FILE *AP1, int offset);
+void Hash_Imprime(FILE *AP1, FILE *AP2, int offset);
 
 
 /*******************************************************************************
@@ -49,5 +50,6 @@ PARÂMETRO: chave - Chave a ser pesquisada (código de controle)
            acessos - Número de acessos para encontrar a chave.
            HASHidx - Arquivo de índice de Hash
            AP1 - Arquivo Principal 1
+           AP2 - Arquivo Principal 2
 *******************************************************************************/
-void Hash_Pesquisa(int chave, int rrn, int acessos, FILE *HASHidx, FILE *AP2);
+void Hash_Pesquisa(int chave, int rrn, int acessos, FILE *HASHidx, FILE *AP1, FILE *AP2);

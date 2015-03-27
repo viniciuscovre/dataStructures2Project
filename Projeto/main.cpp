@@ -32,14 +32,14 @@ int main()
                     if(ListaDados()) /* Busca em Hash */
                     {
                         int aux = h(key);
-                        Hash_Pesquisa(key, aux, 1, HASHidx, AP1);
+                        Hash_Pesquisa(key, aux, 1, HASHidx, AP1, AP2);
                     }
                     else /* Busca em Árvore B */
                     {
-                        searchbtree(key, BTidx, AP1);
+                        searchbtree(key, BTidx, AP1, AP2);
                     }
 			        break;
-            case 4: getallnodes(BTidx, AP1);
+            case 4: getallnodes(BTidx, AP1, AP2);
                     break;
 	        case 0: fclose(AP1); 
 					fclose(AP2);
