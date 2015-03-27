@@ -39,6 +39,8 @@ int main()
                         searchbtree(key, BTidx, AP1);
                     }
 			        break;
+            case 4: getallnodes(BTidx, AP1);
+                    break;
 	        case 0: fclose(AP1); 
 					fclose(AP2);
 					fclose(BTidx);

@@ -16,6 +16,7 @@ int Menu()
     printf("\n 1 %c Cadastra Cachorro", 175);
     printf("\n 2 %c Cadastra Vacina", 175);
     printf("\n 3 %c Listar dados de uma Vacina", 175);
+    printf("\n 4 %c Listar vacinas", 175);
 	printf("\n 0 %c Sair", 175);
 	printf("\n\nEscolha a opcao: ");
     scanf("%d", &opcao);

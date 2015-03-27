@@ -308,3 +308,38 @@ void searchbtree(int key, FILE *BTidx, FILE *AP1) {
      printf("\n Responsavel Pela Aplicacao %c %s", 175, reg.responsavel);
      getch();
 }
+
+void getallnodes(FILE *BTidx, FILE *AP1) {
+    int root;
+    root = getroot(&BTidx);
+    recursiveprint(root, BTidx, AP1);
+
+    getch();
+}
+
+void recursiveprint(int root, FILE *BTidx, FILE *AP1) {
+    int i;
+    BTKEY node;
+    BTPAGE page;
+    VACINA reg;
+
+    if (root == NIL) return;
+    btread(root, &page, &BTidx);
+
+    for (i = 0; i <= page.keycount; i++) {
+        root = page.child[i];
+        recursiveprint(root, BTidx, AP1);
+
+        if (i < page.keycount) {
+            node = page.key[i];
+            fseek(AP1, node.rrn, 0);
+            fread(&reg, sizeof(VACINA), 1, AP1);
+            
+            printf("\n\n DADOS DA VACINA %d", reg.cod_controle);
+            printf("\n\n Codigo do Cachorro %c %d", 175, reg.cod_cachorro);
+            printf("\n Nome da Vacina %c %s", 175, reg.vacina);
+            printf("\n Data de Vacinacao %c %s", 175, reg.data);
+            printf("\n Responsavel Pela Aplicacao %c %s", 175, reg.responsavel);
+        }
+    }
+}

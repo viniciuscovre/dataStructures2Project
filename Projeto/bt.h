@@ -38,3 +38,5 @@ void split(BTKEY key, short r_child, BTPAGE *p_oldpage, BTKEY *promo_key, short 
 int insert(short rrn, BTKEY key, short *promo_r_child, BTKEY *promo_key, int *found, FILE **BTidx);
 void insertnode(short root, BTKEY key, FILE **BTidx);
 void searchbtree(int key, FILE *BTidx, FILE *AP1);
+void getallnodes(FILE *BTidx, FILE *AP1);
+void recursiveprint(int root, FILE *BTidx, FILE *AP1);
