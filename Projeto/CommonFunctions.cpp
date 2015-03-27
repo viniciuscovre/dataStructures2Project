@@ -24,6 +24,7 @@ int Menu()
 	return opcao;
 }
 
+/* Esse trecho é para facilitar na hora dos testes. Fica disponível, se você quiser usar. */
 /*void DeletarArquivos()
 {
     char resp;

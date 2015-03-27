@@ -12,18 +12,11 @@ typedef struct
     char responsavel[30];
 } VACINA;
 
-//FILE *btree;
-
 int btopen(FILE **BTidx)
 {
     *BTidx = fopen("BTidx.bin", "r+");
     return *BTidx != NULL;
 }
-
-/*void btclose(FILE **BTidx)
-{
-    fclose(BTidx);
-}*/
 
 short getroot(FILE **BTidx)
 {
@@ -252,7 +245,7 @@ void insertnode(short root, BTKEY key, FILE **BTidx)
     if (root == NIL)
     {
         root = createroot(key, NIL, NIL, BTidx);
-        printf("\n Chave %d inserida com sucesso em Arvore B\n", key.id);
+        printf("\nChave %d inserida com sucesso em Arvore B!\n", key.id);
         getch();
         return;
     }
@@ -264,26 +257,31 @@ void insertnode(short root, BTKEY key, FILE **BTidx)
 
     if (!found)
     {
-        printf("\n Chave %d inserida com sucesso em Arvore B\n", key.id);
+        printf("\nChave %d inserida com sucesso em Arvore B!\n", key.id);
         getch();
     }
 }
 
-void searchbtree(int key, FILE *BTidx, FILE *AP1) {
+void searchbtree(int key, FILE *BTidx, FILE *AP1) 
+{
      BTPAGE actualPage;
      BTKEY node;
      short pos;
      int root;
 
      VACINA reg;
+     
+     system("CLS");
 
      root = getroot(&BTidx);
      btread(root, &actualPage, &BTidx);
      int found;
      found = searchnode(key, &actualPage, &pos);
 
-     while (!found) {
-        if (root == NIL) {
+     while (!found) 
+     {
+        if (root == NIL) 
+        {
             printf("\n Chave %d nao encontrada\n", key);
             getch();
             return;
@@ -309,7 +307,8 @@ void searchbtree(int key, FILE *BTidx, FILE *AP1) {
      getch();
 }
 
-void getallnodes(FILE *BTidx, FILE *AP1) {
+void getallnodes(FILE *BTidx, FILE *AP1) 
+{
     int root;
     root = getroot(&BTidx);
     recursiveprint(root, BTidx, AP1);
@@ -317,20 +316,25 @@ void getallnodes(FILE *BTidx, FILE *AP1) {
     getch();
 }
 
-void recursiveprint(int root, FILE *BTidx, FILE *AP1) {
+void recursiveprint(int root, FILE *BTidx, FILE *AP1) 
+{
     int i;
     BTKEY node;
     BTPAGE page;
     VACINA reg;
 
+    system("CLS");
+    
     if (root == NIL) return;
     btread(root, &page, &BTidx);
 
-    for (i = 0; i <= page.keycount; i++) {
+    for (i = 0; i <= page.keycount; i++) 
+    {
         root = page.child[i];
         recursiveprint(root, BTidx, AP1);
 
-        if (i < page.keycount) {
+        if (i < page.keycount) 
+        {
             node = page.key[i];
             fseek(AP1, node.rrn, 0);
             fread(&reg, sizeof(VACINA), 1, AP1);
